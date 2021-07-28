@@ -18,3 +18,5 @@ namespace KMWG_MVCApp_Profile.DB_1
         Kadın = 2
     }
 }
+
+
