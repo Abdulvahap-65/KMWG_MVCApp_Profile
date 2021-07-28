@@ -1,0 +1,9 @@
+﻿@model List<KMWG_MVCApp_Profile.Models.UserModel>
+<span>_Users</span>
+<div class="col-md-12">
+    @foreach (KMWG_MVCApp_Profile.Models.UserModel item in Model)
+    {
+        @Html.Partial("_UserItem", item)
+    }
+</div>
+

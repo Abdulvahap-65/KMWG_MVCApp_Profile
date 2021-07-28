@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="67ed6e1a4c6d4a51819de8e868e28e4c" Name="Diagram1">
+        <EntityTypeShape EntityType="MvgMvcDBModel.Addresses" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MvgMvcDBModel.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MvgMvcDBModel.UserGroup" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <AssociationConnector Association="MvgMvcDBModel.FK_Addresses_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="MvgMvcDBModel.FK_User_UserGroup1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

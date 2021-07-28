@@ -1,0 +1,15 @@
+﻿@model KMWG_MVCApp_Profile.Models.UserModel
+@*<span>_UserItem</span>*@
+<div class="col-md-3" style="border:double">
+    <strong>
+        @Model.Name (@Model.UserName)
+    </strong>
+
+    <br />
+    @foreach (var item in Model.Address)
+    {
+        @item
+
+    }
+
+</div>

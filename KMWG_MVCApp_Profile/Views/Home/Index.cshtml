@@ -1,0 +1,69 @@
+﻿@model KMWG_MVCApp_Profile.Models.HomeModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2>@Model.Title</h2>
+<h3>@Model.Date</h3>
+<div>
+    @foreach (var item in Model.Items)
+    {
+
+        @item
+        <br />
+    }
+
+    @*<h1>KullaniciGruplari</h1>
+
+        @foreach (SelectListItem item in (List<SelectListItem>)TempData["KullaniciGruplari"])
+        {
+
+            @item.Text
+        }*@
+
+</div>
+<div class="row">
+
+
+
+    @if (Session["LogonUser"] == null)
+    {
+         using (Html.BeginForm())
+        {
+            <div class="box box-body">
+                <div class="form-group">
+                    @Html.Label("lblUserName", "Kullanıcı Adı", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBox("UserName", "", new { @class = "form-control" })
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("lblPassword ", "Şifre", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBox("Password", "", new { @class = "form-control", @type = "password" })
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="box box-footer">
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-default">
+                        Giriş
+                    </button>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+            <strong>Hoş geldiniz @(((KMWG_MVCApp_Profile.DB_1.User)Session["LogonUser"] ).Name) </strong>
+    
+    }
+
+</div>
+
+    @Html.Partial("_UserCont", (List<KMWG_MVCApp_Profile.DB_1.User>)ViewBag.LastUsers)
