@@ -14,9 +14,7 @@ namespace KMWG_MVCApp_Profile.DB_1
     public enum Cinsiyet : int
     {
         None = 0,
-       Erkek = 1,
+        Erkek = 1,
         Kadın = 2
     }
 }
-
-

@@ -1,5 +1,4 @@
-﻿
-using KMWG_MVCApp_Profile.DB_1;
+﻿using KMWG_MVCApp_Profile.DB_1;
 using KMWG_MVCApp_Profile.Models;
 using System;
 using System.Collections.Generic;
@@ -7,12 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
 namespace KMWG_MVCApp_Profile.Controllers
 {
-
   
-
     public class HomeController : Controller
     {
         MvgMvcDBEntities db;
@@ -33,8 +29,6 @@ namespace KMWG_MVCApp_Profile.Controllers
             m.Items.Add("Home Controlller içerisindeki Index Action'dur.");
             m.Items.Add("Bu sayfa bir model ile dolmaktadır.");
             List<User> lastUsers = db.User.OrderByDescending(x => x.Id).Take(4).ToList();
-
-
             ViewBag.LastUsers = lastUsers;
             return View(m);
         }
@@ -48,34 +42,26 @@ namespace KMWG_MVCApp_Profile.Controllers
             }
             return RedirectToAction("Index");
         }
-
         [HttpGet]
         public ActionResult Profile(int id = 10)
         {
             if (Session["LogonUser"]==null)
             {
                 return RedirectToAction("Index");
-
             }
             var currentUser = (DB_1.User)Session["LogonUser"];
             DB_1.User user = db.User.FirstOrDefault(x => x.Id == currentUser.Id);
             List<SelectListItem> list = db.UserGroup.Select(x => new SelectListItem()
             {
-
                 Text = x.Name,
                 Value = x.Id.ToString()
             }).ToList();
           
             //ViewData["KullaniciGruplari"] = list;
             ViewBag.KullaniciGruplari = list;
-
-
            
             ViewBag.LastUsers = db.User.OrderByDescending(x => x.Id).Take(4).ToList();
-
-
             return View(user);
-
         }
         [HttpPost]
         public ActionResult Profile(DB_1.User user)

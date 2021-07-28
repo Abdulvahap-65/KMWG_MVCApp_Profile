@@ -19,7 +19,6 @@ namespace KMWG_MVCApp_Profile.DB_1
         {
             this.Addresses = new HashSet<Addresses>();
         }
-    
         public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<System.DateTime> BDate { get; set; }
@@ -31,7 +30,6 @@ namespace KMWG_MVCApp_Profile.DB_1
         public Nullable<int> Country { get; set; }
         public string Subject { get; set; }
         public byte[] Photo { get; set; }
-    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Addresses> Addresses { get; set; }
         public virtual UserGroup UserGroup { get; set; }

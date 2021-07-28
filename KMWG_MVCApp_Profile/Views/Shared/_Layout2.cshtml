@@ -1,16 +1,11 @@
-﻿
-<html xmlns="http://www.w3.org/1999/xhtml">
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
-
-
-
     <div class="navbar  navbar-inverse navbar-fixed-top">
-
         <div class="navbar-header">
             @Html.ActionLink("Anasayfa","Index","Home",new {@class="navbar-brand" })
             @Html.ActionLink("Profil","Profile","Home",new {@class="navbar-brand" })
@@ -18,8 +13,6 @@
         </div>
         
     </div>
-
-
     <div class="container body-content ">
         @RenderBody()
         <footer>
@@ -27,7 +20,6 @@
         </footer>
         
     </div>
-
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
 </body>

@@ -6,7 +6,6 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
 namespace KMWG_MVCApp_Profile.DB_1
 {
     using System;
@@ -17,7 +16,6 @@ namespace KMWG_MVCApp_Profile.DB_1
         public int Id { get; set; }
         public string Address { get; set; }
         public int UserId { get; set; }
-    
         public virtual User User { get; set; }
     }
 }

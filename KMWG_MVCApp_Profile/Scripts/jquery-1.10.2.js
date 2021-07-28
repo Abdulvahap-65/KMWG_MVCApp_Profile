@@ -995,7 +995,6 @@ function isArraylike( obj ) {
 	return type === "array" || type !== "function" &&
 		( length === 0 ||
 		typeof length === "number" && length > 0 && ( length - 1 ) in obj );
-}
 
 // All jQuery objects should point back to these
 rootjQuery = jQuery(document);
@@ -1178,7 +1177,6 @@ try {
 			target.length = j - 1;
 		}
 	};
-}
 
 function Sizzle( selector, context, results, seed ) {
 	var match, elem, m, nodeType,
@@ -1287,7 +1285,6 @@ function Sizzle( selector, context, results, seed ) {
 
 	// All others
 	return select( selector.replace( rtrim, "$1" ), context, results, seed );
-}
 
 /**
  * Create key-value caches of limited size
@@ -1307,7 +1304,6 @@ function createCache() {
 		return (cache[ key ] = value);
 	}
 	return cache;
-}
 
 /**
  * Mark a function for special use by Sizzle
@@ -1316,7 +1312,6 @@ function createCache() {
 function markFunction( fn ) {
 	fn[ expando ] = true;
 	return fn;
-}
 
 /**
  * Support testing using an element
@@ -1337,7 +1332,6 @@ function assert( fn ) {
 		// release memory in IE
 		div = null;
 	}
-}
 
 /**
  * Adds the same handler for all of the specified attrs
@@ -1351,7 +1345,6 @@ function addHandle( attrs, handler ) {
 	while ( i-- ) {
 		Expr.attrHandle[ arr[i] ] = handler;
 	}
-}
 
 /**
  * Checks document order of two siblings
@@ -1380,7 +1373,6 @@ function siblingCheck( a, b ) {
 	}
 
 	return a ? 1 : -1;
-}
 
 /**
  * Returns a function to use in pseudos for input types
@@ -1391,7 +1383,6 @@ function createInputPseudo( type ) {
 		var name = elem.nodeName.toLowerCase();
 		return name === "input" && elem.type === type;
 	};
-}
 
 /**
  * Returns a function to use in pseudos for buttons
@@ -1402,7 +1393,6 @@ function createButtonPseudo( type ) {
 		var name = elem.nodeName.toLowerCase();
 		return (name === "input" || name === "button") && elem.type === type;
 	};
-}
 
 /**
  * Returns a function to use in pseudos for positionals
@@ -1424,7 +1414,6 @@ function createPositionalPseudo( fn ) {
 			}
 		});
 	});
-}
 
 /**
  * Detect xml
@@ -2385,10 +2374,8 @@ Expr.pseudos["nth"] = Expr.pseudos["eq"];
 // Add button/input type pseudos
 for ( i in { radio: true, checkbox: true, file: true, password: true, image: true } ) {
 	Expr.pseudos[ i ] = createInputPseudo( i );
-}
 for ( i in { submit: true, reset: true } ) {
 	Expr.pseudos[ i ] = createButtonPseudo( i );
-}
 
 // Easy API for creating new setFilters
 function setFilters() {}
@@ -2460,7 +2447,6 @@ function tokenize( selector, parseOnly ) {
 			Sizzle.error( selector ) :
 			// Cache the tokens
 			tokenCache( selector, groups ).slice( 0 );
-}
 
 function toSelector( tokens ) {
 	var i = 0,
@@ -2470,7 +2456,6 @@ function toSelector( tokens ) {
 		selector += tokens[i].value;
 	}
 	return selector;
-}
 
 function addCombinator( matcher, combinator, base ) {
 	var dir = combinator.dir,
@@ -2520,7 +2505,6 @@ function addCombinator( matcher, combinator, base ) {
 				}
 			}
 		};
-}
 
 function elementMatcher( matchers ) {
 	return matchers.length > 1 ?
@@ -2534,7 +2518,6 @@ function elementMatcher( matchers ) {
 			return true;
 		} :
 		matchers[0];
-}
 
 function condense( unmatched, map, filter, context, xml ) {
 	var elem,
@@ -2555,7 +2538,6 @@ function condense( unmatched, map, filter, context, xml ) {
 	}
 
 	return newUnmatched;
-}
 
 function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postSelector ) {
 	if ( postFilter && !postFilter[ expando ] ) {
@@ -2648,7 +2630,6 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 			}
 		}
 	});
-}
 
 function matcherFromTokens( tokens ) {
 	var checkContext, matcher, j,
@@ -2703,7 +2684,6 @@ function matcherFromTokens( tokens ) {
 	}
 
 	return elementMatcher( matchers );
-}
 
 function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 	// A counter to specify which element is currently being matched
@@ -2804,7 +2784,6 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 	return bySet ?
 		markFunction( superMatcher ) :
 		superMatcher;
-}
 
 compile = Sizzle.compile = function( selector, group /* Internal Use Only */ ) {
 	var i,
@@ -2840,7 +2819,6 @@ function multipleContexts( selector, contexts, results ) {
 		Sizzle( selector, contexts[i], results );
 	}
 	return results;
-}
 
 function select( selector, context, results, seed ) {
 	var i, tokens, token, type, find,
@@ -2904,7 +2882,6 @@ function select( selector, context, results, seed ) {
 		rsibling.test( selector )
 	);
 	return results;
-}
 
 // One-time assignments
 
@@ -2937,7 +2914,6 @@ if ( !assert(function( div ) {
 			return elem.getAttribute( name, name.toLowerCase() === "type" ? 1 : 2 );
 		}
 	});
-}
 
 // Support: IE<9
 // Use defaultValue in place of getAttribute("value")
@@ -2951,7 +2927,6 @@ if ( !support.attributes || !assert(function( div ) {
 			return elem.defaultValue;
 		}
 	});
-}
 
 // Support: IE<9
 // Use getAttributeNode to fetch booleans when getAttribute lies
@@ -2966,7 +2941,6 @@ if ( !assert(function( div ) {
 				elem[ name ] === true ? name.toLowerCase() : null;
 		}
 	});
-}
 
 jQuery.find = Sizzle;
 jQuery.expr = Sizzle.selectors;
@@ -2988,7 +2962,6 @@ function createOptions( options ) {
 		object[ flag ] = true;
 	});
 	return object;
-}
 
 /*
  * Create a callback list using the following parameters:
@@ -3652,7 +3625,6 @@ function internalData( elem, name, data, pvt /* Internal Use Only */ ){
 	}
 
 	return ret;
-}
 
 function internalRemoveData( elem, name, pvt ) {
 	if ( !jQuery.acceptData( elem ) ) {
@@ -3742,7 +3714,6 @@ function internalRemoveData( elem, name, pvt ) {
 	} else {
 		cache[ id ] = null;
 	}
-}
 
 jQuery.extend({
 	cache: {},
@@ -3880,7 +3851,6 @@ function dataAttr( elem, key, data ) {
 	}
 
 	return data;
-}
 
 // checks a cache object for emptiness
 function isEmptyDataObject( obj ) {
@@ -3897,7 +3867,6 @@ function isEmptyDataObject( obj ) {
 	}
 
 	return true;
-}
 jQuery.extend({
 	queue: function( elem, type, data ) {
 		var queue;
@@ -4551,7 +4520,6 @@ if ( !getSetInput || !getSetAttribute ) {
 			}
 		}
 	};
-}
 
 // IE6/7 do not support getting/setting some attributes with get/setAttribute
 if ( !getSetAttribute ) {
@@ -4616,7 +4584,6 @@ if ( !getSetAttribute ) {
 			}
 		};
 	});
-}
 
 
 // Some attributes require a special call on IE
@@ -4630,7 +4597,6 @@ if ( !jQuery.support.hrefNormalized ) {
 			}
 		};
 	});
-}
 
 if ( !jQuery.support.style ) {
 	jQuery.attrHooks.style = {
@@ -4644,7 +4610,6 @@ if ( !jQuery.support.style ) {
 			return ( elem.style.cssText = value + "" );
 		}
 	};
-}
 
 // Safari mis-reports the default selected property of an option
 // Accessing the parent's selectedIndex property fixes it
@@ -4664,7 +4629,6 @@ if ( !jQuery.support.optSelected ) {
 			return null;
 		}
 	};
-}
 
 jQuery.each([
 	"tabIndex",
@@ -4684,7 +4648,6 @@ jQuery.each([
 // IE6/7 call enctype encoding
 if ( !jQuery.support.enctype ) {
 	jQuery.propFix.enctype = "encoding";
-}
 
 // Radios and checkboxes getter/setter
 jQuery.each([ "radio", "checkbox" ], function() {
@@ -4711,17 +4674,14 @@ var rformElems = /^(?:input|select|textarea)$/i,
 
 function returnTrue() {
 	return true;
-}
 
 function returnFalse() {
 	return false;
-}
 
 function safeActiveElement() {
 	try {
 		return document.activeElement;
 	} catch ( err ) { }
-}
 
 /*
  * Helper functions for managing events -- not part of the public interface.
@@ -5510,7 +5470,6 @@ if ( !jQuery.support.submitBubbles ) {
 			jQuery.event.remove( this, "._submit" );
 		}
 	};
-}
 
 // IE change delegation and checkbox/radio fix
 if ( !jQuery.support.changeBubbles ) {
@@ -5569,7 +5528,6 @@ if ( !jQuery.support.changeBubbles ) {
 			return !rformElems.test( this.nodeName );
 		}
 	};
-}
 
 // Create "bubbling" focus and blur events
 if ( !jQuery.support.focusinBubbles ) {
@@ -5594,7 +5552,6 @@ if ( !jQuery.support.focusinBubbles ) {
 			}
 		};
 	});
-}
 
 jQuery.fn.extend({
 
@@ -5841,7 +5798,6 @@ function sibling( cur, dir ) {
 	} while ( cur && cur.nodeType !== 1 );
 
 	return cur;
-}
 
 jQuery.each({
 	parent: function( elem ) {
@@ -5980,7 +5936,6 @@ function winnow( elements, qualifier, not ) {
 	return jQuery.grep( elements, function( elem ) {
 		return ( jQuery.inArray( elem, qualifier ) >= 0 ) !== not;
 	});
-}
 function createSafeFragment( document ) {
 	var list = nodeNames.split( "|" ),
 		safeFrag = document.createDocumentFragment();
@@ -5993,7 +5948,6 @@ function createSafeFragment( document ) {
 		}
 	}
 	return safeFrag;
-}
 
 var nodeNames = "abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|" +
 		"header|hgroup|mark|meter|nav|output|progress|section|summary|time|video",
@@ -6302,13 +6256,11 @@ function manipulationTarget( elem, content ) {
 		elem.getElementsByTagName("tbody")[0] ||
 			elem.appendChild( elem.ownerDocument.createElement("tbody") ) :
 		elem;
-}
 
 // Replace/restore the type attribute of script elements for safe DOM manipulation
 function disableScript( elem ) {
 	elem.type = (jQuery.find.attr( elem, "type" ) !== null) + "/" + elem.type;
 	return elem;
-}
 function restoreScript( elem ) {
 	var match = rscriptTypeMasked.exec( elem.type );
 	if ( match ) {
@@ -6317,7 +6269,6 @@ function restoreScript( elem ) {
 		elem.removeAttribute("type");
 	}
 	return elem;
-}
 
 // Mark scripts as having already been evaluated
 function setGlobalEval( elems, refElements ) {
@@ -6326,7 +6277,6 @@ function setGlobalEval( elems, refElements ) {
 	for ( ; (elem = elems[i]) != null; i++ ) {
 		jQuery._data( elem, "globalEval", !refElements || jQuery._data( refElements[i], "globalEval" ) );
 	}
-}
 
 function cloneCopyEvent( src, dest ) {
 
@@ -6354,7 +6304,6 @@ function cloneCopyEvent( src, dest ) {
 	if ( curData.data ) {
 		curData.data = jQuery.extend( {}, curData.data );
 	}
-}
 
 function fixCloneNodeIssues( src, dest ) {
 	var nodeName, e, data;
@@ -6421,7 +6370,6 @@ function fixCloneNodeIssues( src, dest ) {
 	} else if ( nodeName === "input" || nodeName === "textarea" ) {
 		dest.defaultValue = src.defaultValue;
 	}
-}
 
 jQuery.each({
 	appendTo: "append",
@@ -6469,14 +6417,12 @@ function getAll( context, tag ) {
 	return tag === undefined || tag && jQuery.nodeName( context, tag ) ?
 		jQuery.merge( [ context ], found ) :
 		found;
-}
 
 // Used in buildFragment, fixes the defaultChecked property
 function fixDefaultChecked( elem ) {
 	if ( manipulation_rcheckableType.test( elem.type ) ) {
 		elem.defaultChecked = elem.checked;
 	}
-}
 
 jQuery.extend({
 	clone: function( elem, dataAndEvents, deepDataAndEvents ) {
@@ -6834,14 +6780,12 @@ function vendorPropName( style, name ) {
 	}
 
 	return origName;
-}
 
 function isHidden( elem, el ) {
 	// isHidden might be called from jQuery#filter function;
 	// in that case, element will be second argument
 	elem = el || elem;
 	return jQuery.css( elem, "display" ) === "none" || !jQuery.contains( elem.ownerDocument, elem );
-}
 
 function showHide( elements, show ) {
 	var display, elem, hidden,
@@ -6895,7 +6839,6 @@ function showHide( elements, show ) {
 	}
 
 	return elements;
-}
 
 jQuery.fn.extend({
 	css: function( name, value ) {
@@ -7170,7 +7113,6 @@ if ( window.getComputedStyle ) {
 
 		return ret === "" ? "auto" : ret;
 	};
-}
 
 function setPositiveNumber( elem, value, subtract ) {
 	var matches = rnumsplit.exec( value );
@@ -7178,7 +7120,6 @@ function setPositiveNumber( elem, value, subtract ) {
 		// Guard against undefined "subtract", e.g., when used as in cssHooks
 		Math.max( 0, matches[ 1 ] - ( subtract || 0 ) ) + ( matches[ 2 ] || "px" ) :
 		value;
-}
 
 function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
 	var i = extra === ( isBorderBox ? "border" : "content" ) ?
@@ -7217,7 +7158,6 @@ function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
 	}
 
 	return val;
-}
 
 function getWidthOrHeight( elem, name, extra ) {
 
@@ -7260,7 +7200,6 @@ function getWidthOrHeight( elem, name, extra ) {
 			styles
 		)
 	) + "px";
-}
 
 // Try to determine the default display value of an element
 function css_defaultDisplay( nodeName ) {
@@ -7292,7 +7231,6 @@ function css_defaultDisplay( nodeName ) {
 	}
 
 	return display;
-}
 
 // Called ONLY from within css_defaultDisplay
 function actualDisplay( name, doc ) {
@@ -7300,7 +7238,6 @@ function actualDisplay( name, doc ) {
 		display = jQuery.css( elem[0], "display" );
 	elem.remove();
 	return display;
-}
 
 jQuery.each([ "height", "width" ], function( i, name ) {
 	jQuery.cssHooks[ name ] = {
@@ -7373,7 +7310,6 @@ if ( !jQuery.support.opacity ) {
 				filter + " " + opacity;
 		}
 	};
-}
 
 // These hooks cannot be added until DOM ready because the support test
 // for it is not run until after DOM ready
@@ -7423,7 +7359,6 @@ if ( jQuery.expr && jQuery.expr.filters ) {
 	jQuery.expr.filters.visible = function( elem ) {
 		return !jQuery.expr.filters.hidden( elem );
 	};
-}
 
 // These hooks are used by animate to expand properties
 jQuery.each({
@@ -7550,7 +7485,6 @@ function buildParams( prefix, obj, traditional, add ) {
 		// Serialize scalar item.
 		add( prefix, obj );
 	}
-}
 jQuery.each( ("blur focus focusin focusout load resize scroll unload click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup error contextmenu").split(" "), function( i, name ) {
@@ -7633,7 +7567,6 @@ try {
 	ajaxLocation = document.createElement( "a" );
 	ajaxLocation.href = "";
 	ajaxLocation = ajaxLocation.href;
-}
 
 // Segment location into parts
 ajaxLocParts = rurl.exec( ajaxLocation.toLowerCase() ) || [];
@@ -7668,7 +7601,6 @@ function addToPrefiltersOrTransports( structure ) {
 			}
 		}
 	};
-}
 
 // Base inspection function for prefilters and transports
 function inspectPrefiltersOrTransports( structure, options, originalOptions, jqXHR ) {
@@ -7693,7 +7625,6 @@ function inspectPrefiltersOrTransports( structure, options, originalOptions, jqX
 	}
 
 	return inspect( options.dataTypes[ 0 ] ) || !inspected[ "*" ] && inspect( "*" );
-}
 
 // A special extend for ajax options
 // that takes "flat" options (not to be deep extended)
@@ -7712,7 +7643,6 @@ function ajaxExtend( target, src ) {
 	}
 
 	return target;
-}
 
 jQuery.fn.load = function( url, params, callback ) {
 	if ( typeof url !== "string" && _load ) {
@@ -8343,7 +8273,6 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 		}
 		return responses[ finalDataType ];
 	}
-}
 
 /* Chain conversions given the request and the original response
  * Also sets the responseXXX fields on the jqXHR instance
@@ -8437,7 +8366,6 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 	}
 
 	return { state: "success", data: response };
-}
 // Install script dataType
 jQuery.ajaxSetup({
 	accepts: {
@@ -8620,13 +8548,11 @@ function createStandardXHR() {
 	try {
 		return new window.XMLHttpRequest();
 	} catch( e ) {}
-}
 
 function createActiveXHR() {
 	try {
 		return new window.ActiveXObject("Microsoft.XMLHTTP");
 	} catch( e ) {}
-}
 
 // Create the request object
 // (This is still attached to ajaxSettings for backward compatibility)
@@ -8810,7 +8736,6 @@ if ( xhrSupported ) {
 			};
 		}
 	});
-}
 var fxNow, timerId,
 	rfxtypes = /^(?:toggle|show|hide)$/,
 	rfxnum = new RegExp( "^(?:([+-])=|)(" + core_pnum + ")([a-z%]*)$", "i" ),
@@ -8873,7 +8798,6 @@ function createFxNow() {
 		fxNow = undefined;
 	});
 	return ( fxNow = jQuery.now() );
-}
 
 function createTween( value, prop, animation ) {
 	var tween,
@@ -8887,7 +8811,6 @@ function createTween( value, prop, animation ) {
 			return tween;
 		}
 	}
-}
 
 function Animation( elem, properties, options ) {
 	var result,
@@ -8991,7 +8914,6 @@ function Animation( elem, properties, options ) {
 		.done( animation.opts.done, animation.opts.complete )
 		.fail( animation.opts.fail )
 		.always( animation.opts.always );
-}
 
 function propFilter( props, specialEasing ) {
 	var index, name, easing, value, hooks;
@@ -9028,7 +8950,6 @@ function propFilter( props, specialEasing ) {
 			specialEasing[ name ] = easing;
 		}
 	}
-}
 
 jQuery.Animation = jQuery.extend( Animation, {
 
@@ -9183,11 +9104,9 @@ function defaultPrefilter( elem, props, opts ) {
 			}
 		}
 	}
-}
 
 function Tween( elem, options, prop, end, easing ) {
 	return new Tween.prototype.init( elem, options, prop, end, easing );
-}
 jQuery.Tween = Tween;
 
 Tween.prototype = {
@@ -9427,7 +9346,6 @@ function genFx( type, includeWidth ) {
 	}
 
 	return attrs;
-}
 
 // Generate shortcuts for custom animations
 jQuery.each({
@@ -9542,7 +9460,6 @@ if ( jQuery.expr && jQuery.expr.filters ) {
 			return elem === fn.elem;
 		}).length;
 	};
-}
 jQuery.fn.offset = function( options ) {
 	if ( arguments.length ) {
 		return options === undefined ?
@@ -9711,7 +9628,6 @@ function getWindow( elem ) {
 		elem.nodeType === 9 ?
 			elem.defaultView || elem.parentWindow :
 			false;
-}
 // Create innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
 jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 	jQuery.each( { padding: "inner" + name, content: type, "": "outer" + name }, function( defaultExtra, funcName ) {
@@ -9784,6 +9700,5 @@ if ( typeof module === "object" && module && typeof module.exports === "object" 
 	if ( typeof define === "function" && define.amd ) {
 		define( "jquery", [], function () { return jQuery; } );
 	}
-}
 
 })( window );

@@ -1,7 +1,6 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ include file="EF6.Utility.CS.ttinclude"#><#@ 
  output extension=".cs"#><#
-
 const string inputFile = @"MyDB_1.edmx";
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
@@ -10,14 +9,11 @@ var typeMapper = new TypeMapper(code, ef, textTransform.Errors);
 var	fileManager = EntityFrameworkTemplateFileManager.Create(this);
 var itemCollection = new EdmMetadataLoader(textTransform.Host, textTransform.Errors).CreateEdmItemCollection(inputFile);
 var codeStringGenerator = new CodeStringGenerator(code, typeMapper, ef);
-
 if (!typeMapper.VerifyCaseInsensitiveTypeUniqueness(typeMapper.GetAllGlobalItems(itemCollection), inputFile))
 {
     return string.Empty;
 }
-
 WriteHeader(codeStringGenerator, fileManager);
-
 foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {
     fileManager.StartNewFile(entity.Name + ".cs");
@@ -30,7 +26,6 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
     var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entity);
     var collectionNavigationProperties = typeMapper.GetCollectionNavigationProperties(entity);
     var complexProperties = typeMapper.GetComplexProperties(entity);
-
     if (propertiesWithDefaultValues.Any() || collectionNavigationProperties.Any() || complexProperties.Any())
     {
 #>
@@ -44,14 +39,12 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
         this.<#=code.Escape(edmProperty)#> = <#=typeMapper.CreateLiteral(edmProperty.DefaultValue)#>;
 <#
         }
-
         foreach (var navigationProperty in collectionNavigationProperties)
         {
 #>
         this.<#=code.Escape(navigationProperty)#> = new HashSet<<#=typeMapper.GetTypeName(navigationProperty.ToEndMember.GetEntityType())#>>();
 <#
         }
-
         foreach (var complexProperty in complexProperties)
         {
 #>
@@ -60,10 +53,8 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
         }
 #>
     }
-
 <#
     }
-
     var simpleProperties = typeMapper.GetSimpleProperties(entity);
     if (simpleProperties.Any())
     {
@@ -74,11 +65,9 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 <#
         }
     }
-
     if (complexProperties.Any())
     {
 #>
-
 <#
         foreach(var complexProperty in complexProperties)
         {
@@ -87,12 +76,10 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 <#
         }
     }
-
     var navigationProperties = typeMapper.GetNavigationProperties(entity);
     if (navigationProperties.Any())
     {
 #>
-
 <#
         foreach (var navigationProperty in navigationProperties)
         {
@@ -112,7 +99,6 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 <#
     EndNamespace(code);
 }
-
 foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollection))
 {
     fileManager.StartNewFile(complex.Name + ".cs");
@@ -124,7 +110,6 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
 <#
     var complexProperties = typeMapper.GetComplexProperties(complex);
     var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(complex);
-
     if (propertiesWithDefaultValues.Any() || complexProperties.Any())
     {
 #>
@@ -137,7 +122,6 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
         this.<#=code.Escape(edmProperty)#> = <#=typeMapper.CreateLiteral(edmProperty.DefaultValue)#>;
 <#
         }
-
         foreach (var complexProperty in complexProperties)
         {
 #>
@@ -146,10 +130,8 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
         }
 #>
     }
-
 <#
     }
-
     var simpleProperties = typeMapper.GetSimpleProperties(complex);
     if (simpleProperties.Any())
     {
@@ -160,11 +142,9 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
 <#
         }
     }
-
     if (complexProperties.Any())
     {
 #>
-
 <#
         foreach(var edmProperty in complexProperties)
         {
@@ -178,7 +158,6 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
 <#
     EndNamespace(code);
 }
-
 foreach (var enumType in typeMapper.GetEnumItemsToGenerate(itemCollection))
 {
     fileManager.StartNewFile(enumType.Name + ".cs");
@@ -205,7 +184,6 @@ foreach (var enumType in typeMapper.GetEnumItemsToGenerate(itemCollection))
     <#=code.Escape(typeMapper.GetEnumMemberName(member))#> = <#=typeMapper.GetEnumMemberValue(member)#>,
 <#
     }
-
     if (foundOne)
     {
         this.GenerationEnvironment.Remove(this.GenerationEnvironment.Length - 3, 1);
@@ -215,12 +193,9 @@ foreach (var enumType in typeMapper.GetEnumItemsToGenerate(itemCollection))
 <#
     EndNamespace(code);
 }
-
 fileManager.Process();
-
 #>
 <#+
-
 public void WriteHeader(CodeStringGenerator codeStringGenerator, EntityFrameworkTemplateFileManager fileManager)
 {
     fileManager.StartHeader();
@@ -237,7 +212,6 @@ public void WriteHeader(CodeStringGenerator codeStringGenerator, EntityFramework
 <#+
     fileManager.EndBlock();
 }
-
 public void BeginNamespace(CodeGenerationTools code)
 {
     var codeNamespace = code.VsNamespaceSuggestion();
@@ -250,7 +224,6 @@ namespace <#=code.EscapeNamespace(codeNamespace)#>
         PushIndent("    ");
     }
 }
-
 public void EndNamespace(CodeGenerationTools code)
 {
     if (!String.IsNullOrEmpty(code.VsNamespaceSuggestion()))
@@ -261,26 +234,21 @@ public void EndNamespace(CodeGenerationTools code)
 <#+
     }
 }
-
 public const string TemplateId = "CSharp_DbContext_Types_EF6";
-
 public class CodeStringGenerator
 {
     private readonly CodeGenerationTools _code;
     private readonly TypeMapper _typeMapper;
     private readonly MetadataTools _ef;
-
     public CodeStringGenerator(CodeGenerationTools code, TypeMapper typeMapper, MetadataTools ef)
     {
         ArgumentNotNull(code, "code");
         ArgumentNotNull(typeMapper, "typeMapper");
         ArgumentNotNull(ef, "ef");
-
         _code = code;
         _typeMapper = typeMapper;
         _ef = ef;
     }
-
     public string Property(EdmProperty edmProperty)
     {
         return string.Format(
@@ -292,7 +260,6 @@ public class CodeStringGenerator
             _code.SpaceAfter(Accessibility.ForGetter(edmProperty)),
             _code.SpaceAfter(Accessibility.ForSetter(edmProperty)));
     }
-
     public string NavigationProperty(NavigationProperty navProp)
     {
         var endType = _typeMapper.GetTypeName(navProp.ToEndMember.GetEntityType());
@@ -375,13 +342,11 @@ public class CodeStringGenerator
     {
         var parameters = _typeMapper.GetParameters(edmFunction);
         var returnType = _typeMapper.GetReturnType(edmFunction);
-
         var paramList = String.Join(", ", parameters.Select(p => TypeMapper.FixNamespaces(p.FunctionParameterType) + " " + p.FunctionParameterName).ToArray());
         if (includeMergeOption)
         {
             paramList = _code.StringAfter(paramList, ", ") + "MergeOption mergeOption";
         }
-
         return string.Format(
             CultureInfo.InvariantCulture,
             "{0} {1} {2}({3})",
@@ -395,7 +360,6 @@ public class CodeStringGenerator
     {
         var parameters = _typeMapper.GetParameters(edmFunction);
         var returnType = _typeMapper.GetReturnType(edmFunction);
-
         var callParams = _code.StringBefore(", ", String.Join(", ", parameters.Select(p => p.ExecuteParameterName).ToArray()));
         if (includeMergeOption)
         {
@@ -419,7 +383,6 @@ public class CodeStringGenerator
             _typeMapper.GetTypeName(entitySet.ElementType),
             _code.Escape(entitySet));
     }
-
     public string UsingDirectives(bool inHeader, bool includeCollections = true)
     {
         return inHeader == string.IsNullOrEmpty(_code.VsNamespaceSuggestion())
@@ -433,64 +396,52 @@ public class CodeStringGenerator
             : "";
     }
 }
-
 public class TypeMapper
 {
     private const string ExternalTypeNameAttributeName = @"http://schemas.microsoft.com/ado/2006/04/codegeneration:ExternalTypeName";
-
     private readonly System.Collections.IList _errors;
     private readonly CodeGenerationTools _code;
     private readonly MetadataTools _ef;
-
     public TypeMapper(CodeGenerationTools code, MetadataTools ef, System.Collections.IList errors)
     {
         ArgumentNotNull(code, "code");
         ArgumentNotNull(ef, "ef");
         ArgumentNotNull(errors, "errors");
-
         _code = code;
         _ef = ef;
         _errors = errors;
     }
-
     public static string FixNamespaces(string typeName)
     {
         return typeName.Replace("System.Data.Spatial.", "System.Data.Entity.Spatial.");
     }
-
     public string GetTypeName(TypeUsage typeUsage)
     {
         return typeUsage == null ? null : GetTypeName(typeUsage.EdmType, _ef.IsNullable(typeUsage), modelNamespace: null);
     }
-
     public string GetTypeName(EdmType edmType)
     {
         return GetTypeName(edmType, isNullable: null, modelNamespace: null);
     }
-
     public string GetTypeName(TypeUsage typeUsage, string modelNamespace)
     {
         return typeUsage == null ? null : GetTypeName(typeUsage.EdmType, _ef.IsNullable(typeUsage), modelNamespace);
     }
-
     public string GetTypeName(EdmType edmType, string modelNamespace)
     {
         return GetTypeName(edmType, isNullable: null, modelNamespace: modelNamespace);
     }
-
     public string GetTypeName(EdmType edmType, bool? isNullable, string modelNamespace)
     {
         if (edmType == null)
         {
             return null;
         }
-
         var collectionType = edmType as CollectionType;
         if (collectionType != null)
         {
             return String.Format(CultureInfo.InvariantCulture, "ICollection<{0}>", GetTypeName(collectionType.TypeUsage, modelNamespace));
         }
-
         var typeName = _code.Escape(edmType.MetadataProperties
                                 .Where(p => p.Name == ExternalTypeNameAttributeName)
                                 .Select(p => (string)p.Value)
@@ -498,12 +449,10 @@ public class TypeMapper
             ?? (modelNamespace != null && edmType.NamespaceName != modelNamespace ?
                 _code.CreateFullName(_code.EscapeNamespace(edmType.NamespaceName), _code.Escape(edmType)) :
                 _code.Escape(edmType));
-
         if (edmType is StructuralType)
         {
             return typeName;
         }
-
         if (edmType is SimpleType)
         {
             var clrType = UnderlyingClrType(edmType);
@@ -511,32 +460,26 @@ public class TypeMapper
             {
                 typeName = _code.Escape(clrType);
             }
-
             typeName = FixNamespaces(typeName);
-
             return clrType.IsValueType && isNullable == true ?
                 String.Format(CultureInfo.InvariantCulture, "Nullable<{0}>", typeName) :
                 typeName;
         }
-
         throw new ArgumentException("edmType");
     }
     
     public Type UnderlyingClrType(EdmType edmType)
     {
         ArgumentNotNull(edmType, "edmType");
-
         var primitiveType = edmType as PrimitiveType;
         if (primitiveType != null)
         {
             return primitiveType.ClrEquivalentType;
         }
-
         if (IsEnumType(edmType))
         {
             return GetEnumUnderlyingType(edmType).ClrEquivalentType;
         }
-
         return typeof(object);
     }
     
@@ -555,11 +498,9 @@ public class TypeMapper
         var nameProperty = enumMember.GetType().GetProperty("Name");
         return nameProperty == null ? null : (string)nameProperty.GetValue(enumMember, null);
     }
-
     public System.Collections.IEnumerable GetEnumMembers(EdmType enumType)
     {
         ArgumentNotNull(enumType, "enumType");
-
         var membersProperty = enumType.GetType().GetProperty("Members");
         return membersProperty != null 
             ? (System.Collections.IEnumerable)membersProperty.GetValue(enumType, null)
@@ -573,28 +514,22 @@ public class TypeMapper
         var isFlagsProperty = enumType.GetType().GetProperty("IsFlags");
         return isFlagsProperty != null && (bool)isFlagsProperty.GetValue(enumType, null);
     }
-
     public bool IsEnumType(GlobalItem edmType)
     {
         ArgumentNotNull(edmType, "edmType");
-
         return edmType.GetType().Name == "EnumType";
     }
-
     public PrimitiveType GetEnumUnderlyingType(EdmType enumType)
     {
         ArgumentNotNull(enumType, "enumType");
-
         return (PrimitiveType)enumType.GetType().GetProperty("UnderlyingType").GetValue(enumType, null);
     }
-
     public string CreateLiteral(object value)
     {
         if (value == null || value.GetType() != typeof(TimeSpan))
         {
             return _code.CreateLiteral(value);
         }
-
         return string.Format(CultureInfo.InvariantCulture, "new TimeSpan({0})", ((TimeSpan)value).Ticks);
     }
     
@@ -627,14 +562,12 @@ public class TypeMapper
             .Where(i => !i.MetadataProperties.Any(p => p.Name == ExternalTypeNameAttributeName))
             .OrderBy(i => i.Name);
     }
-
     public IEnumerable<string> GetAllGlobalItems(IEnumerable<GlobalItem> itemCollection)
     {
         return itemCollection
             .Where(i => i is EntityType || i is ComplexType || i is EntityContainer || IsEnumType(i))
             .Select(g => GetGlobalItemName(g));
     }
-
     public string GetGlobalItemName(GlobalItem item)
     {
         if (item is EdmType)
@@ -646,7 +579,6 @@ public class TypeMapper
             return ((EntityContainer)item).Name;
         }
     }
-
     public IEnumerable<EdmProperty> GetSimpleProperties(EntityType type)
     {
         return type.Properties.Where(p => p.TypeUsage.EdmType is SimpleType && p.DeclaringType == type);
@@ -666,7 +598,6 @@ public class TypeMapper
     {
         return type.Properties.Where(p => p.TypeUsage.EdmType is ComplexType && p.DeclaringType == type);
     }
-
     public IEnumerable<EdmProperty> GetPropertiesWithDefaultValues(EntityType type)
     {
         return type.Properties.Where(p => p.TypeUsage.EdmType is SimpleType && p.DeclaringType == type && p.DefaultValue != null);
@@ -676,7 +607,6 @@ public class TypeMapper
     {
         return type.Properties.Where(p => p.TypeUsage.EdmType is SimpleType && p.DeclaringType == type && p.DefaultValue != null);
     }
-
     public IEnumerable<NavigationProperty> GetNavigationProperties(EntityType type)
     {
         return type.NavigationProperties.Where(np => np.DeclaringType == type);
@@ -690,26 +620,21 @@ public class TypeMapper
     public FunctionParameter GetReturnParameter(EdmFunction edmFunction)
     {
         ArgumentNotNull(edmFunction, "edmFunction");
-
         var returnParamsProperty = edmFunction.GetType().GetProperty("ReturnParameters");
         return returnParamsProperty == null
             ? edmFunction.ReturnParameter
             : ((IEnumerable<FunctionParameter>)returnParamsProperty.GetValue(edmFunction, null)).FirstOrDefault();
     }
-
     public bool IsComposable(EdmFunction edmFunction)
     {
         ArgumentNotNull(edmFunction, "edmFunction");
-
         var isComposableProperty = edmFunction.GetType().GetProperty("IsComposableAttribute");
         return isComposableProperty != null && (bool)isComposableProperty.GetValue(edmFunction, null);
     }
-
     public IEnumerable<FunctionImportParameter> GetParameters(EdmFunction edmFunction)
     {
         return FunctionImportParameter.Create(edmFunction.Parameters, _code, _ef);
     }
-
     public TypeUsage GetReturnType(EdmFunction edmFunction)
     {
         var returnParam = GetReturnParameter(edmFunction);
@@ -722,7 +647,6 @@ public class TypeMapper
         return !includeMergeOption && returnType != null && returnType.EdmType.BuiltInTypeKind == BuiltInTypeKind.EntityType;
     }
 }
-
 public static void ArgumentNotNull<T>(T arg, string name) where T : class
 {
     if (arg == null)
