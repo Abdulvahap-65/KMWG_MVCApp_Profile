@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 namespace KMWG_MVCApp_Profile.Controllers
 {
-  
+
     public class HomeController : Controller
     {
         MvgMvcDBEntities db;
@@ -45,7 +45,7 @@ namespace KMWG_MVCApp_Profile.Controllers
         [HttpGet]
         public ActionResult Profile(int id = 10)
         {
-            if (Session["LogonUser"]==null)
+            if (Session["LogonUser"] == null)
             {
                 return RedirectToAction("Index");
             }
@@ -56,38 +56,103 @@ namespace KMWG_MVCApp_Profile.Controllers
                 Text = x.Name,
                 Value = x.Id.ToString()
             }).ToList();
-          
+
             //ViewData["KullaniciGruplari"] = list;
             ViewBag.KullaniciGruplari = list;
-           
+
             ViewBag.LastUsers = db.User.OrderByDescending(x => x.Id).Take(4).ToList();
             return View(user);
         }
         [HttpPost]
-        public ActionResult Profile(DB_1.User user)
+        public ActionResult Profile(/*DB_1.User user*/IEnumerable<HttpPostedFileBase> files)
         {
-            db.Entry<DB_1.User>(user).State=System.Data.Entity.EntityState.Modified;
-            var uFile = Request.Files.Get("uploadPhoto");
-            if (uFile !=null && uFile.ContentLength>0)
+            //db.Entry<DB_1.User>(user).State=System.Data.Entity.EntityState.Modified;
+            //var uFile = Request.Files.Get("uploadPhoto");
+            //if (uFile !=null && uFile.ContentLength>0)
+            //{
+            //    using (MemoryStream ms=new MemoryStream())
+            //    {
+            //        uFile.InputStream.CopyTo(ms);
+            //        user.Photo = ms.ToArray();
+            //    }
+            //}
+            //else
+            //{
+            //    db.Entry<DB_1.User>(user).Property(x => x.Photo).IsModified = false;
+            //}
+            //db.SaveChanges();
+            //return RedirectToAction("Profile");
+
+            //string text2 = "files";
+            //string text2_clear = SeoFriendlyLink.FriendlyURLTitle(text2) + ".jpeg";
+            foreach (var file in files)
             {
-                using (MemoryStream ms=new MemoryStream())
+
+             
+                if (file != null && file.ContentLength > 0)
                 {
-                    uFile.InputStream.CopyTo(ms);
-                    user.Photo = ms.ToArray();
+                    string tmp_filename = Path.GetFileNameWithoutExtension(file.FileName);
+                    string tmp_extension = Path.GetExtension(file.FileName);
+                 
+                    string pathToCheck = Path.Combine(Server.MapPath("~/App_Data/uploads"), SeoFriendlyLink.FriendlyURLTitle(tmp_filename) + tmp_extension);
+                    string tempfileName = "";
+                    string filename = Path.GetFileName(file.FileName);
+
+                    if (System.IO.File.Exists(pathToCheck)==true)
+                    {
+                        int counter = 2;
+                        pathToCheck = Path.Combine(Server.MapPath("~/App_Data/uploads"), SeoFriendlyLink.FriendlyURLTitle(tmp_filename) + "_" + counter + tmp_extension);
+
+                        while (System.IO.File.Exists(pathToCheck)==true)
+                        {
+                            counter++;
+                            pathToCheck = Path.Combine(Server.MapPath("~/App_Data/uploads"), SeoFriendlyLink.FriendlyURLTitle(tmp_filename) + "_" + counter + tmp_extension);
+                            
+                        }
+
+                      
+                    }
+                    else
+                    {
+              
+                        TempData["result"] = "Your file was uploaded successfully.";
+                        file.SaveAs(pathToCheck);
+
+                    }
+                    file.SaveAs(pathToCheck);
+
                 }
+
             }
-            else
-            {
-                db.Entry<DB_1.User>(user).Property(x => x.Photo).IsModified = false;
-            }
-            db.SaveChanges();
-            return RedirectToAction("Profile");
+
+            return RedirectToAction("Index");
+
+
         }
         public ActionResult Logout()
         {
             Session["LogonUser"] = null;
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public ActionResult Index1()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Index1(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                var path = Path.Combine(Server.MapPath("~/UploadFiles"), file.FileName);
+                file.SaveAs(path);
+                TempData["result"] = "Güncelleme Başarılı.";
+            }
+
+            return View();
+
+        }
+
     }
-       
-    }
+
+}

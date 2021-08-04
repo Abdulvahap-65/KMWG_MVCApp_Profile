@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Index1";
+}
+
+<h2>Index1</h2>
+@using (Html.BeginForm("Index1", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @TempData["result"] //Dosya upload sonucu burada yazacak.
+    <div>
+        <input type="file" name="file" class="button" />
+        <input type="submit" value="Gönder" class="button" />
+    </div>
+}
